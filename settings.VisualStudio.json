@@ -1,0 +1,5 @@
+/* Visual Studio Settings File */
+{
+  "languages.csharp.intellisense.showCompletionItemFilters": true,
+  "textEditor.codeCompletions.general.codeCompletionsProviders": []
+}

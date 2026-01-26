@@ -1,0 +1,126 @@
+﻿<Window x:Class="WeatherApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WeatherApp"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="400"
+        WindowStartupLocation="CenterScreen">
+    
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="280"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- 1° row) Title-->
+        <TextBlock Grid.Row="0" 
+                   Text="WeatherApp"
+                   FontSize="20"
+                   FontFamily="Corbel"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"/>
+
+        <!-- 2° row) Display -->
+        <Grid Grid.Row="1">
+            <StackPanel Orientation="Vertical">
+
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Center">
+                     <Label x:Name="labelCity"
+                           Content="City:"
+                            FontFamily="Corbel"
+                           FontSize="12"
+                           FontWeight="SemiBold"/>
+                    <TextBlock x:Name="CityResult"
+                               FontSize="12"
+                               FontFamily="Corbel"
+                               VerticalAlignment="Center"/>
+                </StackPanel>
+
+                <StackPanel>
+                    <TextBlock x:Name="LocalTimeResult"
+                               FontSize="10"
+                               FontFamily="Corbel Light"
+                               HorizontalAlignment="Center"/>
+                </StackPanel>
+
+                <Border Background="DarkSeaGreen"
+                        Height="100"
+                        Width="130"
+                        Margin="20">
+                    <Image/>                    
+                </Border>
+                
+                <TextBlock x:Name="DescriptionResult"
+                            FontSize="12"
+                            FontFamily="Corbel"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"/>
+
+                <StackPanel Orientation="Horizontal"
+                            Height="auto"
+                            Width="auto">
+
+                    <StackPanel Orientation="Vertical">
+                       <Label x:Name="labelTemp"
+                           Content="Temperature"
+                           FontFamily="Corbel"
+                           FontSize="12"
+                           FontWeight="SemiBold"/>
+                        <TextBlock x:Name="TempResult"
+                                   FontSize="12"
+                                   FontFamily="Corbel"
+                                   VerticalAlignment="Center"/>                       
+                    </StackPanel>
+
+                    <StackPanel Orientation="Vertical">
+                        <Label x:Name="labelVento"
+                               Content="Wind"
+                               FontFamily="Corbel"
+                               FontSize="12"
+                               FontWeight="SemiBold"/>
+                        <TextBlock x:Name="WindResult"
+                                   FontSize="12"
+                                   FontFamily="Corbel"
+                                   FontWeight="SemiBold"
+                                   VerticalAlignment="Center"/>
+                    </StackPanel>
+
+                </StackPanel>
+
+ 
+
+                <StackPanel Orientation="Horizontal">
+                    
+                </StackPanel>
+
+            </StackPanel>
+        </Grid>
+        
+        <!-- 3° row) Search-->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
+            <TextBlock Text="Cidade"
+                       FontSize="15"
+                       FontFamily="Corbel"
+                       VerticalAlignment="Center"/>
+
+            <TextBox x:Name="SearchBox" 
+                     Height="20"
+                     Width="200"
+                     Margin="10"/>
+
+            <Button x:Name="btnSearch" 
+                    Height="20"
+                    Width="40"
+                    Content="OK"
+                    Click="Button_Click"/>
+        </StackPanel>
+
+
+    </Grid>
+    
+</Window>
