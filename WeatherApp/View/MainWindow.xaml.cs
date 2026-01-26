@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Text.Json;
 using System.Net.Http;
 using WeatherApp.Models;
@@ -76,6 +77,8 @@ namespace WeatherApp
                 {
                     CityResult.Text = "Cidade não encontrada!";
                     TempResult.Text = "Temperatura não encontrada!";
+                    FeelsLikeResult.Text = "Sensação térmica não encontrada!";
+                    HumidityResult.Text = "Humidade não encontrada!";
                     DescriptionResult.Text = "Detalhes não encontrados!";
                     WindResult.Text = "Informações sobre vento não encontradas!";
                     return;
@@ -98,14 +101,36 @@ namespace WeatherApp
                 {
                     CityResult.Text = "Dados incompletos!";
                     TempResult.Text = "";
+                    FeelsLikeResult.Text = "";
+                    HumidityResult.Text = "";
                     DescriptionResult.Text = "";
                     WindResult.Text = "";
                 }
 
                 // Atualiza a UI com os valores desserializados
+
+                // nome da cidade
                 CityResult.Text = weather.Name ?? "-";
+
+                // componentes para conversão de horário
+                double timezoneInSeconds = weather.Timezone; // timezone chega da API em segundos
+                DateTime utcNow = DateTime.UtcNow; // criando e definindo um DateTime atual
+                DateTime localTime = DateTime.UtcNow.AddSeconds(timezoneInSeconds);
+                TimezoneResult.Text = localTime.ToString("HH:mm:ss");
+
+                // temperatura
                 TempResult.Text = $"{weather.Main.Temp} °C";
+
+                // sensação térmica
+                FeelsLikeResult.Text = $"{weather.Main.FeelsLike} °C";
+
+                // humidade
+                HumidityResult.Text = $"{weather.Main.Humidity} %";
+
+                // descrição do tempo
                 DescriptionResult.Text = weather.Weather[0].Description ?? "-";
+
+                // velocidade do vento
                 WindResult.Text = $"{weather.Wind.Speed} m/s";
             }
             catch (Exception ex)
@@ -113,6 +138,8 @@ namespace WeatherApp
                 // em um cenário onde aconteça um erro, mostra na UI essa mensagem genérica
                 CityResult.Text = "Erro inesperado!";
                 TempResult.Text = "";
+                FeelsLikeResult.Text = "";
+                HumidityResult.Text = "";
                 DescriptionResult.Text = "";
                 WindResult.Text = "";
 

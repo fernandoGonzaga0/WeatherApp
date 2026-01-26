@@ -5,68 +5,69 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WeatherApp"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="400"
+        Title="MainWindow" Height="600" Width="500"
         WindowStartupLocation="CenterScreen">
-    
-    <Grid>
+
+    <Grid Background="#E9E9E9">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
-            <RowDefinition Height="280"/>
+            <RowDefinition Height="380"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <!-- 1° row) Title-->
         <TextBlock Grid.Row="0" 
                    Text="WeatherApp"
-                   FontSize="20"
-                   FontFamily="Corbel"
+                   FontSize="30"
+                   FontFamily="Candara"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"/>
 
         <!-- 2° row) Display -->
         <Grid Grid.Row="1">
+            
             <StackPanel Orientation="Vertical">
-
-                <StackPanel Orientation="Horizontal"
+                
+                <!--Image-->
+                 <Border x:Name="WeatherImg"
+                        Height="200"
+                        Width="230"
+                        Margin="20"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center">
+                    <Image/>
+                </Border>               
+                
+                <!--City and timezone-->
+                <StackPanel Orientation="Vertical"
                             HorizontalAlignment="Center">
-                     <Label x:Name="labelCity"
-                           Content="City:"
-                            FontFamily="Corbel"
-                           FontSize="12"
-                           FontWeight="SemiBold"/>
                     <TextBlock x:Name="CityResult"
                                FontSize="12"
                                FontFamily="Corbel"
                                VerticalAlignment="Center"/>
-                </StackPanel>
-
-                <StackPanel>
-                    <TextBlock x:Name="LocalTimeResult"
+                    <TextBlock x:Name="TimezoneResult"
                                FontSize="10"
-                               FontFamily="Corbel Light"
-                               HorizontalAlignment="Center"/>
+                               FontFamily="Corbel"
+                               VerticalAlignment="Center"/>
                 </StackPanel>
-
-                <Border Background="DarkSeaGreen"
-                        Height="100"
-                        Width="130"
-                        Margin="20">
-                    <Image/>                    
-                </Border>
-                
+    
+                <!--Description-->
                 <TextBlock x:Name="DescriptionResult"
                             FontSize="12"
                             FontFamily="Corbel"
                             VerticalAlignment="Center"
                             HorizontalAlignment="Center"/>
 
+                <!--Other Information-->
                 <StackPanel Orientation="Horizontal"
                             Height="auto"
-                            Width="auto">
+                            Width="auto"
+                            HorizontalAlignment="Center">
 
+                    <!--Temperature-->
                     <StackPanel Orientation="Vertical">
-                       <Label x:Name="labelTemp"
+                        <Label x:Name="labelTemp"
                            Content="Temperature"
                            FontFamily="Corbel"
                            FontSize="12"
@@ -74,11 +75,38 @@
                         <TextBlock x:Name="TempResult"
                                    FontSize="12"
                                    FontFamily="Corbel"
-                                   VerticalAlignment="Center"/>                       
+                                   VerticalAlignment="Center"/>
                     </StackPanel>
 
+                    <!--FeelsLike-->
                     <StackPanel Orientation="Vertical">
-                        <Label x:Name="labelVento"
+                        <Label x:Name="labelFeelsLike"
+                               Content="Feels Like"
+                               FontFamily="Corbel"
+                               FontSize="12"
+                               FontWeight="SemiBold"/>
+                        <TextBlock x:Name="FeelsLikeResult"
+                                   FontSize="12"
+                                   FontFamily="Corbel"
+                                   VerticalAlignment="Center"/>
+                    </StackPanel>
+
+                    <!--Humidity-->
+                    <StackPanel Orientation="Vertical">
+                        <Label x:Name="labelHumidity"
+                               Content="Humidity"
+                               FontFamily="Corbel"
+                               FontSize="12"
+                               FontWeight="SemiBold"/>
+                        <TextBlock x:Name="HumidityResult"
+                                   FontSize="12"
+                                   FontFamily="Corbel"
+                                   VerticalAlignment="Center"/>
+                    </StackPanel>
+
+                    <!--Wind-->
+                    <StackPanel Orientation="Vertical">
+                        <Label x:Name="labelWind"
                                Content="Wind"
                                FontFamily="Corbel"
                                FontSize="12"
@@ -92,26 +120,18 @@
 
                 </StackPanel>
 
- 
-
-                <StackPanel Orientation="Horizontal">
-                    
-                </StackPanel>
-
             </StackPanel>
+            
         </Grid>
-        
+
         <!-- 3° row) Search-->
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
-            <TextBlock Text="Cidade"
-                       FontSize="15"
-                       FontFamily="Corbel"
-                       VerticalAlignment="Center"/>
-
+            
             <TextBox x:Name="SearchBox" 
-                     Height="20"
-                     Width="200"
-                     Margin="10"/>
+                    Height="20"
+                    Width="200"
+                    Margin="10"
+                    Background="Transparent"/>
 
             <Button x:Name="btnSearch" 
                     Height="20"
@@ -120,7 +140,6 @@
                     Click="Button_Click"/>
         </StackPanel>
 
-
     </Grid>
-    
+
 </Window>

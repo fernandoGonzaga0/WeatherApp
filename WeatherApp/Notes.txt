@@ -1,0 +1,20 @@
+Estrutura do projeto:
+
+Models -> representando os dados vindo da API. O arquivo models deve ser baseado em estruturas de classe que acompanhem a forma como os dados chegam da API. 
+		  Link para verificar a estrutura (JSON format API response fields): https://openweathermap.org/current.
+
+Views -> cria a interface e conecta ela com os dados estabelecidos em Models. 
+
+	XAML -> descreve a aparência da aplicação, como os dados serão exibidos ao usuário.
+	XAML.CS -> descreve o comportamento desses elementos quando o usuário interage com eles (inicializa a janela, define os objetos que serão usados pela janela, manipula os eventos,
+			   interage com UI, etc).
+
+
+Fluxo para criar dados na API:
+
+i) criar o model seguindo a estrutura da API, como validamos agora a pouco (ex: se quisesse criar de sensação térmica, criaria dentro de MainInfo visando obter a main.feels_like);
+
+ii) criar o objeto da classe model dentro de WeatherResponse (ou diretamente, caso o dado não venha por classe na API);
+
+iii) já na MainWindow.xaml.cs, tenho que inserir dentro do evento do botão, o campo de texto do TextBlock previamente nomeado (ex: TempFeelsLike.Text) o valor desserializado da informação 
+que quero (weather.Weather[1].TempFeelsLike);
