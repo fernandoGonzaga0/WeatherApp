@@ -26,19 +26,29 @@
 
         <!-- 2° row) Display -->
         <Grid Grid.Row="1">
-            
+
             <StackPanel Orientation="Vertical">
-                
+
                 <!--Image-->
-                 <Border x:Name="WeatherImg"
-                        Height="200"
-                        Width="230"
-                        Margin="20"
-                        VerticalAlignment="Center"
-                        HorizontalAlignment="Center">
-                    <Image/>
-                </Border>               
-                
+                <Border Height="190" 
+                        Width="250" 
+                        Margin="20" 
+                        CornerRadius="20" 
+                        ClipToBounds="True">
+                    <Image x:Name="WeatherImage" 
+                           Stretch="UniformToFill">
+                        <Image.Clip>
+                            <RectangleGeometry RadiusX="20"
+                                               RadiusY="20"
+                                               Rect="0,0,250,190"/>
+                        </Image.Clip>
+                    </Image>
+                    <Border.Background>
+                        <ImageBrush ImageSource="/Resources/default.jpg" 
+                                    Stretch="UniformToFill"/>
+                    </Border.Background>
+                </Border>
+
                 <!--City and timezone-->
                 <StackPanel Orientation="Vertical"
                             HorizontalAlignment="Center">
@@ -127,11 +137,24 @@
         <!-- 3° row) Search-->
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
             
-            <TextBox x:Name="SearchBox" 
-                    Height="20"
-                    Width="200"
-                    Margin="10"
-                    Background="Transparent"/>
+            <!--Search input-->
+            <Grid>
+                <TextBox x:Name="SearchBox" 
+                        Height="20"
+                        Width="200"
+                        Margin="10"
+                        VerticalAlignment="Center"
+                        TextChanged="SearchBox_TextChanged"/>
+                <TextBlock x:Name="SearchTextBlock"
+                           Text="Search..."
+                           Height="20"
+                           Width="200"
+                           Margin="10"
+                           Foreground="Gray"
+                           VerticalAlignment="Center"
+                           IsHitTestVisible="False"
+                           Visibility="Visible"/>
+            </Grid>
 
             <Button x:Name="btnSearch" 
                     Height="20"

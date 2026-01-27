@@ -9,7 +9,65 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\cleanSkyDay.jpg" />
+    <None Remove="Resources\cleanSkyNight.jpg" />
+    <None Remove="Resources\cloudySkyDay.jpg" />
+    <None Remove="Resources\cloudySkyNight.jpg" />
+    <None Remove="Resources\default.jpg" />
+    <None Remove="Resources\fewCloudsDay.jpg" />
+    <None Remove="Resources\fewCloudsNight.jpg" />
+    <None Remove="Resources\rainDay.jpg" />
+    <None Remove="Resources\rainNight.jpg" />
+    <None Remove="Resources\snowDay.jpg" />
+    <None Remove="Resources\snowNight.jpg" />
+    <None Remove="Resources\thunderstormDay.jpg" />
+    <None Remove="Resources\thunderstormNight.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="OpenWeatherMap.API" Version="2.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\cleanSkyDay.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\cleanSkyNight.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\cloudySkyDay.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\cloudySkyNight.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\default.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\fewCloudsDay.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\fewCloudsNight.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\rainDay.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\rainNight.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\snowDay.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\snowNight.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\thunderstormDay.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\thunderstormNight.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
 </Project>

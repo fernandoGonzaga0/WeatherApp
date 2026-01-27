@@ -8,13 +8,13 @@
 
         public int Timezone { get; set; } // representa Timezone (horário local) no JSON em segundos, esse valor será convertido no programa
         
-        public MainInfo Main { get; set; } // representa a classe "main" do JSON (temperatura, etc.)
+        public MainInfo? Main { get; set; } // representa a classe "main" do JSON (temperatura, etc.)
                                            // vamos usar duas propriedades aqui também, assim como em WeatherInfo abaixo, mas como a classe Main se trata apenas de double, podemos chamar
                                            // ela diretamente ao invés de alocar por array
 
         public required WeatherInfo[] Weather { get; set; } // representa a classe "weather" do JSON (descrição do tempo, etc.)
 
-        public WindInfo Wind { get; set; } // representa a classe wind no JSON
+        public WindInfo? Wind { get; set; } // representa a classe wind no JSON
 
     }
 }

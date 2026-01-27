@@ -3,6 +3,8 @@ using System.Windows;
 using System.Text.Json;
 using System.Net.Http;
 using WeatherApp.Models;
+using System.Windows.Controls;
+using System.Windows.Media.Imaging;
 
 /*
 
@@ -37,115 +39,221 @@ namespace WeatherApp
 {
     public partial class MainWindow : Window
     {
-        // cliente HTTP reutilizável para fazer requisições à API
-        private readonly HttpClient _httpClient = new HttpClient();
+        // CAMPOS E CONSTANTES
 
-        // chave da API 
-        private readonly string apiKey = "af8bee2cf657f1295ededfda82c02255";
+            // cliente HTTP reutilizável para fazer requisições à API
+            private readonly HttpClient _httpClient = new HttpClient();
 
-        // construtor que inicializa a janela
-        public MainWindow()
-        {
-            InitializeComponent();
-        }
+            // chave da API 
+            private readonly string apiKey = "af8bee2cf657f1295ededfda82c02255";
+        
+        // CONSTRUTORES
 
-        // manipulador de clique do botão que busca o tempo para a cidade informada
-        private async void Button_Click(object sender, RoutedEventArgs e)
-        {
-            // obtendo o nome da cidade a partir do TextBox
-            string city = SearchBox.Text;
-
-            // monta a URL da API usando a cidade e a chave da API
-            string url = $"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={apiKey}&units=metric&lang=pt_br";
-
-            try
+            // construtor que inicializa a janela
+            public MainWindow()
             {
-                // validando se o SearchBox não está vazio
-                if (string.IsNullOrWhiteSpace(SearchBox.Text))
+                InitializeComponent();
+            }
+
+        // MANIPULADORES DE EVENTOS
+
+            // manipulador de clique do botão que busca o tempo para a cidade informada
+            private async void Button_Click(object sender, RoutedEventArgs e)
+            {
+                // CAMPOS E CONSTANTES
+
+                    // obtendo o nome da cidade a partir do TextBox
+                    string city = SearchBox.Text;
+
+                    // monta a URL da API usando a cidade e a chave da API
+                    string url = $"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={apiKey}&units=metric&lang=pt_br";
+
+                try
                 {
-                     // caso esteja vazio, exibe mensagem para inserção de alguma cidade
-                     MessageBox.Show("Por favor, insira o nome de uma cidade.");
-                    SearchBox.Focus();
-                    return;
+                    // CAMPOS E CONSTANTES
+
+                        // VARIÁVEIS PARA CONEXÃO COM API E TRATATIVAS DE DADOS
+
+                            // envia a requisição GET para a API
+                            var httpResponse = await _httpClient.GetAsync(url);
+
+                            // lê o conteúdo da resposta como string JSON
+                            var response = await httpResponse.Content.ReadAsStringAsync();
+
+                            // configura opções de desserialização para ignorar diferenças de maiúsculas/minúsculas
+                            var options = new JsonSerializerOptions
+                            {
+                                PropertyNameCaseInsensitive = true
+                            };   
+                
+                            // desserializa o JSON para o objeto WeatherResponse
+                            var weather = JsonSerializer.Deserialize<WeatherResponse>(response, options);
+                            // Atualiza a UI com os valores desserializados
+
+                        // COMPONENTES PARA ATUALIZAÇÃO DA UI COM OS VALORES DESSERIALIZADOS
+
+                            // nome da cidade
+                            CityResult.Text = weather.Name ?? "-";
+                            
+                            // componentes para conversão de horário
+                            double timezoneInSeconds = weather.Timezone; // timezone chega da API em segundos
+                            DateTime utcNow = DateTime.UtcNow; // criando e definindo um DateTime atual
+                            DateTime localTime = DateTime.UtcNow.AddSeconds(timezoneInSeconds);
+                            TimezoneResult.Text = localTime.ToString("HH:mm");
+
+                            // temperatura
+                            TempResult.Text = $"{weather.Main.Temp} °C";
+
+                            // sensação térmica
+                            FeelsLikeResult.Text = $"{weather.Main.FeelsLike} °C";
+
+                            // humidade
+                            HumidityResult.Text = $"{weather.Main.Humidity} %";
+
+                            // descrição do tempo
+                            DescriptionResult.Text = weather.Weather[0].Description ?? "-";
+
+                            // velocidade do vento
+                            WindResult.Text = $"{weather.Wind.Speed} m/s";
+
+                        // COMPONENTES PARA INSERÇÃO DE IMAGENS CONFORME RETORNO DA API (description)
+
+                            // obtendo o retorno em texto da API da classe main no objeto description
+                            string? description = weather.Weather[0].Description?.ToLower();
+
+                            // convertendo o horário local da cidade para validar se é dia (entre 06:00 e 18:59) ou noite (entre 19:00 e 05:59)
+                            int timezoneDayOrNight = int.Parse(TimezoneResult.Text.Substring(0, 2));
+                                
+                    // CONDICIONAIS
+
+                        // validando se o SearchBox não está vazio
+                        if (string.IsNullOrWhiteSpace(SearchBox.Text))
+                        {
+                             // caso esteja vazio, exibe mensagem para inserção de alguma cidade
+                             MessageBox.Show("Por favor, insira o nome de uma cidade.");
+                            SearchBox.Focus();
+                            return;
+                        }
+
+                        // se a resposta não for bem-sucedida, exibe mensagem de erro na UI
+                        if (!httpResponse.IsSuccessStatusCode)
+                        {
+                            CityResult.Text = "Cidade não encontrada!";
+                            TempResult.Text = "Temperatura não encontrada!";
+                            FeelsLikeResult.Text = "Sensação térmica não encontrada!";
+                            HumidityResult.Text = "Humidade não encontrada!";
+                            DescriptionResult.Text = "Detalhes não encontrados!";
+                            WindResult.Text = "Informações sobre vento não encontradas!";
+                            return;
+                        }
+
+                        // verificação defensiva para garantir que os dados esperados existem antes de acessá-los
+                        if (weather?.Main == null || weather.Weather == null || weather.Weather.Length == 0)
+                        {
+                            CityResult.Text = "Dados incompletos!";
+                            TempResult.Text = "";
+                            FeelsLikeResult.Text = "";
+                            HumidityResult.Text = "";
+                            DescriptionResult.Text = "";
+                            WindResult.Text = "";
+                        }
+
+                        // condicionais para alterar as imagens no WeatherImg conforme o retorno de description (Ex: description retornando 'nublado' exibe uma imagem de céu nublado)
+
+                        // céu limpo
+                        if (description.Contains("céu limpo") && (timezoneDayOrNight >= 6) && (timezoneDayOrNight <= 18) ) 
+                        {
+                            WeatherImage.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/cleanSkyDay.jpg"));
+                        }
+
+                        else if (description.Contains("céu limpo"))
+                        {
+                            WeatherImage.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/cleanSkyNight"));
+                        }
+
+                        //// poucas nuvens / nuvens dispersas
+                        //else if (description.Contains("poucas nuvens") || description.Contains("nuvens dispersas") && (timezoneDayOrNight >= 6) && (timezoneDayOrNight <= 18))
+                        //{
+                        //    WeatherImage.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/fewCloudsDay"));
+                        //}
+
+                        //else if (description.Contains("poucas nuvens") || description.Contains("nuvens dispersas"))
+                        //{
+                        //    WeatherImage.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/fewCloudsNight"));
+                        //}
+
+                        // nublado
+                        //else if (description.Contains("nublado") && (timezoneDayOrNight >= 6) && (timezoneDayOrNight <= 18))
+                        //{
+                        //    WeatherImage.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/cloudyDay.jpg"));
+                        //}
+
+                        //else if (description.Contains("nublado"))
+                        //{
+                        //    WeatherImage.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/cloudyNight"));
+                        //}
+
+                        //// chuva leve / chuva
+                        //else if (description.Contains("chuva leve") || description.Contains("chuva") && (timezoneDayOrNight >= 6) && (timezoneDayOrNight <= 18))
+                        //{
+                        //    WeatherImage.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/rainDay"));
+                        //}
+
+                        //else if (description.Contains("chuva leve") || description.Contains("chuva"))
+                        //{
+                        //    WeatherImage.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/rainNight"));
+                        //}
+
+                        //// trovoada
+                        //else if (description.Contains("trovoada") && (timezoneDayOrNight >= 6) && (timezoneDayOrNight <= 18))
+                        //{
+                        //    WeatherImage.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/thunderstormDay"));
+                        //}
+
+                        //else if (description.Contains("trovoada"))
+                        //{
+                        //    WeatherImage.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/thunderstormNight"));
+                        //}
+
+                        //// neve / névoa
+                        //else if (description.Contains("neve") || description.Contains("névoa") && (timezoneDayOrNight >= 6) && (timezoneDayOrNight <= 18))
+                        //{
+                        //    WeatherImage.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/snowDay"));
+                        //}
+
+                        //else if (description.Contains("neve") || description.Contains("névoa"))
+                        //{
+                        //    WeatherImage.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/snowNight"));
+                        //}
+
+                        // chamando a imagem padrão caso algo dê errado
+                        else
+                        {
+                            WeatherImage.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/default.jpg")); // imagem padrão
+                        }
+
                 }
 
-                // envia a requisição GET para a API
-                var httpResponse = await _httpClient.GetAsync(url);
+                catch (Exception ex)
 
-                // se a resposta não for bem-sucedida, exibe mensagem de erro na UI
-                if (!httpResponse.IsSuccessStatusCode)
                 {
-                    CityResult.Text = "Cidade não encontrada!";
-                    TempResult.Text = "Temperatura não encontrada!";
-                    FeelsLikeResult.Text = "Sensação térmica não encontrada!";
-                    HumidityResult.Text = "Humidade não encontrada!";
-                    DescriptionResult.Text = "Detalhes não encontrados!";
-                    WindResult.Text = "Informações sobre vento não encontradas!";
-                    return;
-                }
-
-                // lê o conteúdo da resposta como string JSON
-                var response = await httpResponse.Content.ReadAsStringAsync();
-
-                // configura opções de desserialização para ignorar diferenças de maiúsculas/minúsculas
-                var options = new JsonSerializerOptions
-                {
-                    PropertyNameCaseInsensitive = true
-                };
-
-                // desserializa o JSON para o objeto WeatherResponse
-                var weather = JsonSerializer.Deserialize<WeatherResponse>(response, options);
-
-                // verificação defensiva para garantir que os dados esperados existem antes de acessá-los
-                if (weather?.Main == null || weather.Weather == null || weather.Weather.Length == 0)
-                {
-                    CityResult.Text = "Dados incompletos!";
+                    // em um cenário onde aconteça um erro, mostra na UI essa mensagem genérica
+                    CityResult.Text = "Erro inesperado!";
                     TempResult.Text = "";
                     FeelsLikeResult.Text = "";
                     HumidityResult.Text = "";
                     DescriptionResult.Text = "";
                     WindResult.Text = "";
+
+                    // para depuração local, logando ex.Message/stacktrace em log file ou Debug.WriteLine
+                    System.Diagnostics.Debug.WriteLine(ex.ToString());
                 }
-
-                // Atualiza a UI com os valores desserializados
-
-                // nome da cidade
-                CityResult.Text = weather.Name ?? "-";
-
-                // componentes para conversão de horário
-                double timezoneInSeconds = weather.Timezone; // timezone chega da API em segundos
-                DateTime utcNow = DateTime.UtcNow; // criando e definindo um DateTime atual
-                DateTime localTime = DateTime.UtcNow.AddSeconds(timezoneInSeconds);
-                TimezoneResult.Text = localTime.ToString("HH:mm:ss");
-
-                // temperatura
-                TempResult.Text = $"{weather.Main.Temp} °C";
-
-                // sensação térmica
-                FeelsLikeResult.Text = $"{weather.Main.FeelsLike} °C";
-
-                // humidade
-                HumidityResult.Text = $"{weather.Main.Humidity} %";
-
-                // descrição do tempo
-                DescriptionResult.Text = weather.Weather[0].Description ?? "-";
-
-                // velocidade do vento
-                WindResult.Text = $"{weather.Wind.Speed} m/s";
             }
-            catch (Exception ex)
+
+            // manipulador de funcionalidade para "placeholder" entre o SearchBox e o SearchTextBlock
+            private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
             {
-                // em um cenário onde aconteça um erro, mostra na UI essa mensagem genérica
-                CityResult.Text = "Erro inesperado!";
-                TempResult.Text = "";
-                FeelsLikeResult.Text = "";
-                HumidityResult.Text = "";
-                DescriptionResult.Text = "";
-                WindResult.Text = "";
-
-                // para depuração local, logando ex.Message/stacktrace em log file ou Debug.WriteLine
-                System.Diagnostics.Debug.WriteLine(ex.ToString());
+                SearchTextBlock.Visibility = string.IsNullOrEmpty(SearchBox.Text) ? Visibility.Visible : Visibility.Hidden;
             }
-        }
     }
 }
