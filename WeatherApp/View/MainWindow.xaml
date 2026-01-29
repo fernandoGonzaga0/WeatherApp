@@ -16,187 +16,226 @@
         
         <!--Adicionando três controlTemplate nos recursos para aplicar efeito "hover" nos botões da página-->
         
+        <!--Minimize button template-->
+        <ControlTemplate x:Key="MinimizeButtonTemplate" TargetType="Button">
+            <Border x:Name="WindowMinimizeBorder">
+                <fa:IconImage x:Name="MinimizeIcon"
+                              Icon="WindowMinimize"
+                              Foreground="#30364F"
+                              Height="3.4"
+                              Width="30"
+                              Margin="0,0,8,0"
+                              VerticalAlignment="Bottom"/>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter TargetName="WindowMinimizeBorder" Property="Background" Value="Transparent"/>
+                    <Setter TargetName="MinimizeIcon" Property="Foreground" Value="#ffffff"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+        
         <!--Close button template-->
         <ControlTemplate x:Key="CloseButtonTemplate" TargetType="Button">
-            
-            <!--falta configurar o tamanho do botao em si, já configurei do template aqui-->
-
             <Border x:Name="WindowCloseBorder">
-                <fa:IconImage Icon="Close"
-                              Height="4"
+                <fa:IconImage x:Name="CloseIcon" 
+                              Icon="Close"
+                              Foreground="#30364F"
+                              Height="15"
                               Width="25"
-                              Margin="0,0,10,0"/>
+                              VerticalAlignment="Bottom"/>
             </Border>
-
             <ControlTemplate.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter TargetName="WindowCloseBorder" Property="Background" Value="Transparent"/>
+                    <Setter TargetName="CloseIcon" Property="Foreground" Value="#ffffff"/>
                 </Trigger>
-            </ControlTemplate.Triggers> 
-            
+            </ControlTemplate.Triggers>
         </ControlTemplate>
         
+        <!--Label for Temperature, FeelsLike, Humidity and Wind-->
+        <Style x:Key="WheaterInfoLabel" TargetType="Label">
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="FontFamily" Value="Courier New"/>
+            <Setter Property="Foreground" Value="#F0F0DB"/>
+        </Style>
+        
+        <!--TextBlock for temperature, feelslike, humidity and wind-->
+        <Style x:Key="WheaterInfoTextBlock" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontFamily" Value="Corbel"/>
+            <Setter Property="Foreground" Value="#E1D9BC"/>
+        </Style>
+
     </Window.Resources>
 
-    <Border Background="Gray"
+    <Border Background="#ACBAC4"
             CornerRadius="20">
 
         <Grid Background="Transparent">
 
-        <Grid.RowDefinitions>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="380"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="380"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
 
-        <!--0° row) Close and minimize buttons-->
-        <StackPanel Grid.Row="0"
-                    Orientation="Horizontal"
-                    HorizontalAlignment="Right"
-                    Margin="10">
-            
-                <!--Minimize button-->
-                <Button x:Name="MinimizeButton"
-                        Click="MinimizeButton_Click"
-                        Background="Transparent"
-                        BorderThickness="0">
-                    <fa:IconImage Icon="WindowMinimize"
-                                  Height="4"
-                                  Width="25"
-                                  Margin="0,0,10,0"/>
-                </Button>
+            <!--0° row) Close and minimize buttons-->
+            <Grid Grid.Row="0"
+                  Width="490">
 
-                <!--Close button-->
-                <Button
-                        Click="CloseButton_Click"
-                        Background="Transparent"
-                        BorderThickness="0"
-                        Template="{StaticResource CloseButtonTemplate}"/>
-
-            </StackPanel>
-
-        <!-- 1° row) Title-->
-        <TextBlock Grid.Row="1" 
-                   Text="WeatherApp"
-                   FontSize="30"
-                   FontFamily="SimSun-ExtB"
-                   FontWeight="Bold"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center"/>
-
-        <!-- 2° row) Display -->
-        <Grid Grid.Row="2">
-
-            <StackPanel Orientation="Vertical">
-
-                <!--Image-->
-                <Border Height="190" 
-                        Width="250" 
-                        Margin="20" 
-                        CornerRadius="20" 
-                        ClipToBounds="True">
-                    <Image x:Name="WeatherImage" 
-                           Stretch="UniformToFill">
-                        <Image.Clip>
-                            <RectangleGeometry RadiusX="20"
-                                               RadiusY="20"
-                                               Rect="0,0,250,190"/>
-                        </Image.Clip>
-                    </Image>
-                    <Border.Background>
-                        <ImageBrush ImageSource="/Resources/default.jpg" 
-                                    Stretch="UniformToFill"/>
-                    </Border.Background>
-                </Border>
-
-                <!--City and timezone-->
-                <StackPanel Orientation="Vertical"
-                            HorizontalAlignment="Center">
-                    <TextBlock x:Name="CityResult"
-                               FontSize="12"
-                               FontFamily="Corbel"
-                               VerticalAlignment="Center"/>
-                    <TextBlock x:Name="TimezoneResult"
-                               FontSize="10"
-                               FontFamily="Corbel"
-                               VerticalAlignment="Center"/>
+                <StackPanel VerticalAlignment="Bottom">
+                    <!--Title-->
+                    <TextBlock  Text="WHEATER APP"
+                                FontSize="20"
+                                FontFamily="Gabriola"
+                                FontWeight="Black"
+                                Foreground="#30364F"
+                                HorizontalAlignment="Left"
+                                Margin="10,10,0,0"/>
                 </StackPanel>
+
+                    <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Right">
+                        <!--Minimize button-->
+                        <Button Click="MinimizeButton_Click"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Template="{StaticResource MinimizeButtonTemplate}">
+                        </Button>
+
+                        <!--Close button-->
+                        <Button
+                            Click="CloseButton_Click"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Template="{StaticResource CloseButtonTemplate}"/>
+                    </StackPanel>
+
+                </Grid>
+
+
+            <!-- 1° row) Display -->
+            <Grid Grid.Row="1"
+                  Margin="0,10,0,0">
+
+                <StackPanel Orientation="Vertical">
+
+                    <StackPanel Orientation="Horizontal">
+                    
+                        <!--Image-->
+                        <Border Height="290" 
+                                Width="250" 
+                                Margin="20" 
+                                CornerRadius="10" 
+                                ClipToBounds="True">
+                            <Image x:Name="WeatherImage" 
+                                    Stretch="UniformToFill">
+                                <Image.Clip>
+                                    <RectangleGeometry RadiusX="20"
+                                                        RadiusY="20"
+                                                        Rect="0,0,250,190"/>
+                                </Image.Clip>
+                            </Image>
+                            <Border.Background>
+                                <ImageBrush ImageSource="/Resources/default.jpg" 
+                                            Stretch="UniformToFill"/>
+                            </Border.Background>
+                        </Border>
+
+                        <!--City, timezone and description-->
+                        <Grid VerticalAlignment="Center">
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            
+                            <!--City name-->
+                            <TextBlock  Grid.Row="0" 
+                                        x:Name="CityResult"
+                                        FontSize="35"
+                                        FontFamily="Gabriola"
+                                        Foreground="#F0F0DB"
+                                        VerticalAlignment="Center"/>
+                            
+                            <!--Timezone-->
+                            <TextBlock  Grid.Row="1" 
+                                        x:Name="TimezoneResult"
+                                        FontSize="25"
+                                        FontFamily="Gabriola"
+                                        Foreground="#E1D9BC"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"/>
     
-                <!--Description-->
-                <TextBlock x:Name="DescriptionResult"
-                            FontSize="12"
-                            FontFamily="Corbel"
-                            VerticalAlignment="Center"
-                            HorizontalAlignment="Center"/>
-
-                <!--Other Information-->
-                <StackPanel Orientation="Horizontal"
-                            Height="auto"
-                            Width="auto"
-                            HorizontalAlignment="Center">
-
-                    <!--Temperature-->
-                    <StackPanel Orientation="Vertical">
-                        <Label x:Name="labelTemp"
-                           Content="Temperature"
-                           FontFamily="Corbel"
-                           FontSize="12"
-                           FontWeight="SemiBold"/>
-                        <TextBlock x:Name="TempResult"
-                                   FontSize="12"
-                                   FontFamily="Corbel"
-                                   VerticalAlignment="Center"/>
+                            <!--Description-->
+                            <TextBlock  Grid.Row="2" 
+                                        x:Name="DescriptionResult"
+                                        FontSize="20"
+                                        FontFamily="Gabriola"
+                                        Foreground="#E1D9BC"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"/> 
+                            
+                        </Grid>
+     
                     </StackPanel>
 
-                    <!--FeelsLike-->
-                    <StackPanel Orientation="Vertical">
-                        <Label x:Name="labelFeelsLike"
-                               Content="Feels Like"
-                               FontFamily="Corbel"
-                               FontSize="12"
-                               FontWeight="SemiBold"/>
-                        <TextBlock x:Name="FeelsLikeResult"
-                                   FontSize="12"
-                                   FontFamily="Corbel"
-                                   VerticalAlignment="Center"/>
-                    </StackPanel>
+                    <!--Temperature, FeelsLike, Humidity and Wind-->
+                    <StackPanel Orientation="Horizontal"
+                                Height="auto"
+                                Width="auto"
+                                HorizontalAlignment="Center">
 
-                    <!--Humidity-->
-                    <StackPanel Orientation="Vertical">
-                        <Label x:Name="labelHumidity"
-                               Content="Humidity"
-                               FontFamily="Corbel"
-                               FontSize="12"
-                               FontWeight="SemiBold"/>
-                        <TextBlock x:Name="HumidityResult"
-                                   FontSize="12"
-                                   FontFamily="Corbel"
-                                   VerticalAlignment="Center"/>
-                    </StackPanel>
+                        <!--Temperature-->
+                        <StackPanel Orientation="Vertical"
+                                    Margin="15">
+                            <Label Content="Temperature"
+                                   x:Name="labelTemp"
+                                   Style="{StaticResource WheaterInfoLabel}"/>
+                            <TextBlock x:Name="TempResult" 
+                                       Style="{StaticResource WheaterInfoTextBlock}"/>
+                        </StackPanel>
 
-                    <!--Wind-->
-                    <StackPanel Orientation="Vertical">
-                        <Label x:Name="labelWind"
-                               Content="Wind"
-                               FontFamily="Corbel"
-                               FontSize="12"
-                               FontWeight="SemiBold"/>
-                        <TextBlock x:Name="WindResult"
-                                   FontSize="12"
-                                   FontFamily="Corbel"
-                                   FontWeight="SemiBold"
-                                   VerticalAlignment="Center"/>
+                        <!--FeelsLike-->
+                        <StackPanel Orientation="Vertical"
+                                    Margin="15">
+                            <Label Content="Feels Like"
+                                   x:Name="labelFeelsLike"
+                                   Style="{StaticResource WheaterInfoLabel}"/>
+                            <TextBlock x:Name="FeelsLikeResult" 
+                                       Style="{StaticResource WheaterInfoTextBlock}"/>
+                        </StackPanel>
+
+                        <!--Humidity-->
+                        <StackPanel Orientation="Vertical"
+                                    Margin="15">
+                            <Label Content="Humidity"
+                                   x:Name="labelHumidity"
+                                   Style="{StaticResource WheaterInfoLabel}"/>
+                            <TextBlock x:Name="HumidityResult" 
+                                       Style="{StaticResource WheaterInfoTextBlock}"/>
+                        </StackPanel>
+
+                        <!--Wind-->
+                        <StackPanel Orientation="Vertical"
+                                    Margin="15">
+                            <Label Content="Wind"
+                                   x:Name="labelWind"
+                                   Style="{StaticResource WheaterInfoLabel}"/>
+                            <TextBlock x:Name="WindResult" 
+                                       Style="{StaticResource WheaterInfoTextBlock}"/>
+                        </StackPanel>
+
                     </StackPanel>
 
                 </StackPanel>
-
-            </StackPanel>
             
-        </Grid>
+            </Grid>
 
-        <!-- 3° row) Search-->
-        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center">
+        <!-- 2° row) Search-->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
             
             <!--Search input-->
             <Grid>
@@ -224,8 +263,7 @@
                     Click="Button_Click"/>
         </StackPanel>
 
-    </Grid> 
+            </Grid> 
     </Border>
     
-
 </Window>

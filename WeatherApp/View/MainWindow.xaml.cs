@@ -125,7 +125,7 @@ namespace WeatherApp
                             int timezoneDayOrNight = int.Parse(TimezoneResult.Text.Substring(0, 2));
 
                             // boolean para verificar se é dia ou não
-                            bool isDay = timezoneDayOrNight is >= 16 and <= 18;
+                            bool isDay = timezoneDayOrNight is >= 6 and <= 18;
 
                             // caminho relativo para a imagem exibida
                             string resourcePath;
@@ -174,7 +174,7 @@ namespace WeatherApp
                         }
 
                         // poucas nuvens / nuvens dispersas
-                        else if (description.Contains("poucas nuvens") || description.Contains("nuvens dispersas"))
+                        else if (description.Contains("poucas nuvens") || description.Contains("nuvens dispersas") || description.Contains("algumas nuvens"))
                         {
                             resourcePath = isDay ? "fewCloudsDay.jpg" : "fewCloudsNight.jpg";
                         }
