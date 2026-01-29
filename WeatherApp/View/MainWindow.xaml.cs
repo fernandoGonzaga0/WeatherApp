@@ -164,53 +164,65 @@ namespace WeatherApp
                             WindResult.Text = "";
                         }
 
-                        // condicionais para alterar as imagens no WeatherImg conforme o retorno de description (Ex: description retornando 'nublado' exibe uma imagem de céu nublado)
+                // condicionais para alterar as imagens no WeatherImg conforme o retorno de description (Ex: description retornando 'nublado' exibe uma imagem de céu nublado)
 
-                        // céu limpo
-                        if (description.Contains("céu limpo")) 
-                        {
-                            // condição ? valorSeTrue : valorSeFalse
-                            resourcePath = isDay ? "cleanSkyDay.jpg" : "cleanSkyNight.jpg";
-                        }
+                // céu limpo
+                if (description.Contains("céu limpo"))
+                {
+                    // condição ? valorSeTrue : valorSeFalse
+                    resourcePath = isDay ? "cleanSkyDay.jpg" : "cleanSkyNight.jpg";
+                }
 
-                        // poucas nuvens / nuvens dispersas
-                        else if (description.Contains("poucas nuvens") || description.Contains("nuvens dispersas") || description.Contains("algumas nuvens"))
-                        {
-                            resourcePath = isDay ? "fewCloudsDay.jpg" : "fewCloudsNight.jpg";
-                        }
+                // poucas nuvens / nuvens dispersas
+                else if (description.Contains("poucas nuvens") || description.Contains("nuvens dispersas") || description.Contains("algumas nuvens"))
+                {
+                    resourcePath = isDay ? "fewCloudsDay.jpg" : "fewCloudsNight.jpg";
+                }
 
-                        // nublado
-                        else if (description.Contains("nublado"))
-                        {
-                            resourcePath = isDay ? "cloudySkyDay.jpg" : "cloudySkyNight.jpg"; 
-                        }
+                // nublado
+                else if (description.Contains("nublado"))
+                {
+                    resourcePath = isDay ? "cloudySkyDay.jpg" : "cloudySkyNight.jpg";
+                }
 
-                        // chuva leve / chuva
-                        else if (description.Contains("chuva leve") || description.Contains("chuva"))
-                        {
-                            resourcePath = isDay ? "rainDay.jpg" : "rainNight.jpg";
-                        }
+                // chuva leve / chuva
+                else if (description.Contains("chuva leve") || description.Contains("chuva"))
+                {
+                    resourcePath = isDay ? "rainDay.jpg" : "rainNight.jpg";
+                }
 
-                        // trovoada
-                        else if (description.Contains("trovoada"))
-                        {
-                            resourcePath = isDay ? "thunderstormDay.jpg" : "thunderstormNight.jpg";
-                        }                        
+                // trovoada
+                else if (description.Contains("trovoada"))
+                {
+                    resourcePath = isDay ? "thunderstormDay.jpg" : "thunderstormNight.jpg";
+                }
 
-                        // neve / névoa
-                        else if (description.Contains("neve") || description.Contains("névoa") || description.Contains("neve leve"))
-                        {
-                            resourcePath = isDay ? "snowDay.jpg" : "snowNight.jpg";
-                        }
+                // neblina / névoa
 
-                        // imagem padrão da aplicação caso nenhuma das alternativas seja aceita
-                        else
-                        {
-                            resourcePath = "default.jpg";
-                        }
+                else if (description.Contains("neblina") || description.Contains("névoa"))
+                {
+                    resourcePath = isDay ? "fogDay.jpg" : "fogNight.jpg";
+                }
+
+                // neve / neve leve
+                else if (description.Contains("neve") || description.Contains("neve leve"))
+                {
+                    resourcePath = isDay ? "snowDay.jpg" : "snowNight.jpg";
+                }
+
+                // imagem padrão da aplicação caso nenhuma das alternativas seja aceita
+                else
+                {
+                    resourcePath = "default.jpg";
+                }
 
                         // chamando a imagem padrão caso não haja retorno válido
                         WeatherImage.Source = new BitmapImage(new Uri($"pack://application:,,,/Resources/{resourcePath}", UriKind.Absolute));
+                        
+                        // ajustando as dimensões da imagem e como ela se ajusta à tela
+                        WeatherImage.Width = 250;
+                        WeatherImage.Height = 250;
+                        WeatherImage.Stretch = System.Windows.Media.Stretch.UniformToFill;
 
                 }
 

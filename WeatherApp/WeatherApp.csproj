@@ -16,6 +16,8 @@
     <None Remove="Resources\default.jpg" />
     <None Remove="Resources\fewCloudsDay.jpg" />
     <None Remove="Resources\fewCloudsNight.jpg" />
+    <None Remove="Resources\fogDay.jpg" />
+    <None Remove="Resources\fogNight.jpg" />
     <None Remove="Resources\rainDay.jpg" />
     <None Remove="Resources\rainNight.jpg" />
     <None Remove="Resources\snowDay.jpg" />
@@ -49,6 +51,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\fewCloudsNight.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\fogDay.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\fogNight.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\rainDay.jpg">
