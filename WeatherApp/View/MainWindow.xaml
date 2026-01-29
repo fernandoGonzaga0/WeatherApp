@@ -4,28 +4,89 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WeatherApp"
+        xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
         mc:Ignorable="d"
         Title="MainWindow" Height="600" Width="500"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        Background="Transparent"
+        AllowsTransparency="True">
 
-    <Grid Background="#E9E9E9">
+    <Window.Resources>
+        
+        <!--Adicionando três controlTemplate nos recursos para aplicar efeito "hover" nos botões da página-->
+        
+        <!--Close button template-->
+        <ControlTemplate x:Key="CloseButtonTemplate" TargetType="Button">
+            
+            <!--falta configurar o tamanho do botao em si, já configurei do template aqui-->
+
+            <Border x:Name="WindowCloseBorder">
+                <fa:IconImage Icon="Close"
+                              Height="4"
+                              Width="25"
+                              Margin="0,0,10,0"/>
+            </Border>
+
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter TargetName="WindowCloseBorder" Property="Background" Value="Transparent"/>
+                </Trigger>
+            </ControlTemplate.Triggers> 
+            
+        </ControlTemplate>
+        
+    </Window.Resources>
+
+    <Border Background="Gray"
+            CornerRadius="20">
+
+        <Grid Background="Transparent">
 
         <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
             <RowDefinition Height="50"/>
             <RowDefinition Height="380"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
+        <!--0° row) Close and minimize buttons-->
+        <StackPanel Grid.Row="0"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    Margin="10">
+            
+                <!--Minimize button-->
+                <Button x:Name="MinimizeButton"
+                        Click="MinimizeButton_Click"
+                        Background="Transparent"
+                        BorderThickness="0">
+                    <fa:IconImage Icon="WindowMinimize"
+                                  Height="4"
+                                  Width="25"
+                                  Margin="0,0,10,0"/>
+                </Button>
+
+                <!--Close button-->
+                <Button
+                        Click="CloseButton_Click"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Template="{StaticResource CloseButtonTemplate}"/>
+
+            </StackPanel>
+
         <!-- 1° row) Title-->
-        <TextBlock Grid.Row="0" 
+        <TextBlock Grid.Row="1" 
                    Text="WeatherApp"
                    FontSize="30"
-                   FontFamily="Candara"
+                   FontFamily="SimSun-ExtB"
+                   FontWeight="Bold"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"/>
 
         <!-- 2° row) Display -->
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="2">
 
             <StackPanel Orientation="Vertical">
 
@@ -135,7 +196,7 @@
         </Grid>
 
         <!-- 3° row) Search-->
-        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center">
             
             <!--Search input-->
             <Grid>
@@ -163,6 +224,8 @@
                     Click="Button_Click"/>
         </StackPanel>
 
-    </Grid>
+    </Grid> 
+    </Border>
+    
 
 </Window>

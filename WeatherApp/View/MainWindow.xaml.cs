@@ -123,6 +123,12 @@ namespace WeatherApp
 
                             // convertendo o horário local da cidade para validar se é dia (entre 06:00 e 18:59) ou noite (entre 19:00 e 05:59)
                             int timezoneDayOrNight = int.Parse(TimezoneResult.Text.Substring(0, 2));
+
+                            // boolean para verificar se é dia ou não
+                            bool isDay = timezoneDayOrNight is >= 16 and <= 18;
+
+                            // caminho relativo para a imagem exibida
+                            string resourcePath;
                                 
                     // CONDICIONAIS
 
@@ -161,76 +167,50 @@ namespace WeatherApp
                         // condicionais para alterar as imagens no WeatherImg conforme o retorno de description (Ex: description retornando 'nublado' exibe uma imagem de céu nublado)
 
                         // céu limpo
-                        if (description.Contains("céu limpo") && (timezoneDayOrNight >= 6) && (timezoneDayOrNight <= 18) ) 
+                        if (description.Contains("céu limpo")) 
                         {
-                            WeatherImage.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/cleanSkyDay.jpg"));
+                            // condição ? valorSeTrue : valorSeFalse
+                            resourcePath = isDay ? "cleanSkyDay.jpg" : "cleanSkyNight.jpg";
                         }
 
-                        else if (description.Contains("céu limpo"))
+                        // poucas nuvens / nuvens dispersas
+                        else if (description.Contains("poucas nuvens") || description.Contains("nuvens dispersas"))
                         {
-                            WeatherImage.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/cleanSkyNight"));
+                            resourcePath = isDay ? "fewCloudsDay.jpg" : "fewCloudsNight.jpg";
                         }
-
-                        //// poucas nuvens / nuvens dispersas
-                        //else if (description.Contains("poucas nuvens") || description.Contains("nuvens dispersas") && (timezoneDayOrNight >= 6) && (timezoneDayOrNight <= 18))
-                        //{
-                        //    WeatherImage.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/fewCloudsDay"));
-                        //}
-
-                        //else if (description.Contains("poucas nuvens") || description.Contains("nuvens dispersas"))
-                        //{
-                        //    WeatherImage.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/fewCloudsNight"));
-                        //}
 
                         // nublado
-                        //else if (description.Contains("nublado") && (timezoneDayOrNight >= 6) && (timezoneDayOrNight <= 18))
-                        //{
-                        //    WeatherImage.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/cloudyDay.jpg"));
-                        //}
+                        else if (description.Contains("nublado"))
+                        {
+                            resourcePath = isDay ? "cloudySkyDay.jpg" : "cloudySkyNight.jpg"; 
+                        }
 
-                        //else if (description.Contains("nublado"))
-                        //{
-                        //    WeatherImage.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/cloudyNight"));
-                        //}
+                        // chuva leve / chuva
+                        else if (description.Contains("chuva leve") || description.Contains("chuva"))
+                        {
+                            resourcePath = isDay ? "rainDay.jpg" : "rainNight.jpg";
+                        }
 
-                        //// chuva leve / chuva
-                        //else if (description.Contains("chuva leve") || description.Contains("chuva") && (timezoneDayOrNight >= 6) && (timezoneDayOrNight <= 18))
-                        //{
-                        //    WeatherImage.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/rainDay"));
-                        //}
+                        // trovoada
+                        else if (description.Contains("trovoada"))
+                        {
+                            resourcePath = isDay ? "thunderstormDay.jpg" : "thunderstormNight.jpg";
+                        }                        
 
-                        //else if (description.Contains("chuva leve") || description.Contains("chuva"))
-                        //{
-                        //    WeatherImage.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/rainNight"));
-                        //}
+                        // neve / névoa
+                        else if (description.Contains("neve") || description.Contains("névoa") || description.Contains("neve leve"))
+                        {
+                            resourcePath = isDay ? "snowDay.jpg" : "snowNight.jpg";
+                        }
 
-                        //// trovoada
-                        //else if (description.Contains("trovoada") && (timezoneDayOrNight >= 6) && (timezoneDayOrNight <= 18))
-                        //{
-                        //    WeatherImage.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/thunderstormDay"));
-                        //}
-
-                        //else if (description.Contains("trovoada"))
-                        //{
-                        //    WeatherImage.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/thunderstormNight"));
-                        //}
-
-                        //// neve / névoa
-                        //else if (description.Contains("neve") || description.Contains("névoa") && (timezoneDayOrNight >= 6) && (timezoneDayOrNight <= 18))
-                        //{
-                        //    WeatherImage.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/snowDay"));
-                        //}
-
-                        //else if (description.Contains("neve") || description.Contains("névoa"))
-                        //{
-                        //    WeatherImage.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/snowNight"));
-                        //}
-
-                        // chamando a imagem padrão caso algo dê errado
+                        // imagem padrão da aplicação caso nenhuma das alternativas seja aceita
                         else
                         {
-                            WeatherImage.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/default.jpg")); // imagem padrão
+                            resourcePath = "default.jpg";
                         }
+
+                        // chamando a imagem padrão caso não haja retorno válido
+                        WeatherImage.Source = new BitmapImage(new Uri($"pack://application:,,,/Resources/{resourcePath}", UriKind.Absolute));
 
                 }
 
@@ -249,11 +229,23 @@ namespace WeatherApp
                     System.Diagnostics.Debug.WriteLine(ex.ToString());
                 }
             }
-
+         
             // manipulador de funcionalidade para "placeholder" entre o SearchBox e o SearchTextBlock
             private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
             {
                 SearchTextBlock.Visibility = string.IsNullOrEmpty(SearchBox.Text) ? Visibility.Visible : Visibility.Hidden;
+            }
+
+            // manipulador do botão para minimizar a aplicação
+            private void MinimizeButton_Click(object sender, RoutedEventArgs e)
+            {
+                Application.Current.MainWindow.WindowState = WindowState.Minimized;                
+            }
+
+            // manipulador do botão para fechar a aplicação
+            private void CloseButton_Click(object sender, RoutedEventArgs e)
+            {
+                Window.GetWindow(this)?.Close();
             }
     }
 }
