@@ -20,6 +20,8 @@
     <None Remove="Resources\fewCloudsNight.jpg" />
     <None Remove="Resources\fogDay.jpg" />
     <None Remove="Resources\fogNight.jpg" />
+    <None Remove="Resources\GitHubResources\appRunning.GIF" />
+    <None Remove="Resources\GitHubResources\printApp.PNG" />
     <None Remove="Resources\rainDay.jpg" />
     <None Remove="Resources\rainNight.jpg" />
     <None Remove="Resources\sandDay.jpg" />
@@ -71,6 +73,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\fogNight.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\GitHubResources\appRunning.GIF">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\GitHubResources\printApp.PNG">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\rainDay.jpg">
