@@ -9,21 +9,29 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Resources\cleanSkyDay.jpg" />
-    <None Remove="Resources\cleanSkyNight.jpg" />
+    <None Remove="Resources\clearSkyDay.jpg" />
+    <None Remove="Resources\clearSkyNight.jpg" />
     <None Remove="Resources\cloudySkyDay.jpg" />
     <None Remove="Resources\cloudySkyNight.jpg" />
     <None Remove="Resources\default.jpg" />
+    <None Remove="Resources\drizzleDay.jpg" />
+    <None Remove="Resources\drizzleNight.jpg" />
     <None Remove="Resources\fewCloudsDay.jpg" />
     <None Remove="Resources\fewCloudsNight.jpg" />
     <None Remove="Resources\fogDay.jpg" />
     <None Remove="Resources\fogNight.jpg" />
     <None Remove="Resources\rainDay.jpg" />
     <None Remove="Resources\rainNight.jpg" />
+    <None Remove="Resources\sandDay.jpg" />
+    <None Remove="Resources\sandNight.jpg" />
     <None Remove="Resources\snowDay.jpg" />
     <None Remove="Resources\snowNight.jpg" />
     <None Remove="Resources\thunderstormDay.jpg" />
     <None Remove="Resources\thunderstormNight.jpg" />
+    <None Remove="Resources\tornadoDay.jpg" />
+    <None Remove="Resources\tornadoNight.jpg" />
+    <None Remove="Resources\volcanicAshDay.jpg" />
+    <None Remove="Resources\volcanicAshNight.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -32,10 +40,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Resources\cleanSkyDay.jpg">
+    <Resource Include="Resources\clearSkyDay.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Resources\cleanSkyNight.jpg">
+    <Resource Include="Resources\clearSkyNight.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\cloudySkyDay.jpg">
@@ -45,6 +53,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\default.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\drizzleDay.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\drizzleNight.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\fewCloudsDay.jpg">
@@ -65,6 +79,12 @@
     <Resource Include="Resources\rainNight.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Resources\sandDay.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\sandNight.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Resources\snowDay.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
@@ -75,6 +95,18 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\thunderstormNight.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\tornadoDay.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\tornadoNight.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\volcanicAshDay.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\volcanicAshNight.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>

@@ -77,7 +77,7 @@ namespace WeatherApp
                     string city = SearchBox.Text;
 
                     // monta a URL da API usando a cidade e a chave da API
-                    string url = $"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={apiKey}&units=metric&lang=pt_br";
+                    string url = $"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={apiKey}&units=metric&lang=en_eua";
 
                 try
                 {
@@ -177,50 +177,116 @@ namespace WeatherApp
                 // condicionais para alterar as imagens no WeatherImg conforme o retorno de description (Ex: description retornando 'nublado' exibe uma imagem de céu nublado)
 
                 // céu limpo
-                if (description.Contains("céu limpo"))
+                if (description.Contains("clear sky"))
                 {
-                    // condição ? valorSeTrue : valorSeFalse
-                    resourcePath = isDay ? "cleanSkyDay.jpg" : "cleanSkyNight.jpg";
+                    resourcePath = isDay ? "clearSkyDay.jpg" : "clearSkyNight.jpg";
                 }
 
                 // poucas nuvens / nuvens dispersas
-                else if (description.Contains("poucas nuvens") || description.Contains("nuvens dispersas") || description.Contains("algumas nuvens"))
+                else if (description.Contains("few clouds") ||
+                         description.Contains("scattered clouds") ||
+                         description.Contains("broken clouds"))
                 {
                     resourcePath = isDay ? "fewCloudsDay.jpg" : "fewCloudsNight.jpg";
                 }
 
                 // nublado
-                else if (description.Contains("nublado"))
+                else if (description.Contains("overcast clouds"))
                 {
                     resourcePath = isDay ? "cloudySkyDay.jpg" : "cloudySkyNight.jpg";
                 }
 
-                // chuva leve / chuva
-                else if (description.Contains("chuva leve") || description.Contains("chuva") || description.Contains("garoa de leve intensidade"))
-                {
-                    resourcePath = isDay ? "rainDay.jpg" : "rainNight.jpg";
-                }
-
                 // trovoada
-                else if (description.Contains("trovoada"))
+                else if (description.Contains("thunderstorm") ||
+                         description.Contains("thunderstorm with light rain") ||
+                         description.Contains("thunderstorm with rain") ||
+                         description.Contains("thunderstorm with heavy rain") ||
+                         description.Contains("light thunderstorm") ||
+                         description.Contains("heavy thunderstorm") ||
+                         description.Contains("ragged thunderstorm") ||
+                         description.Contains("thunderstorm with light drizzle") ||
+                         description.Contains("thunderstorm with drizzle"))
                 {
                     resourcePath = isDay ? "thunderstormDay.jpg" : "thunderstormNight.jpg";
                 }
 
-                // neblina / névoa
-
-                else if (description.Contains("neblina") || description.Contains("névoa"))
+                // garoa
+                else if (description.Contains("light intensity drizzle") ||
+                         description.Contains("drizzle") ||
+                         description.Contains("heavy intensity drizzle") ||
+                         description.Contains("light intensity drizzle rain") ||
+                         description.Contains("drizzle rain") ||
+                         description.Contains("heavy intensity drizzle rain") ||
+                         description.Contains("shower rain and drizzle") ||
+                         description.Contains("heavy shower rain and drizzle") ||
+                         description.Contains("shower drizzle"))
                 {
-                    resourcePath = isDay ? "fogDay.jpg" : "fogNight.jpg";
+                    resourcePath = isDay ? "drizzleDay.jpg" : "drizzleNight.jpg";
                 }
 
-                // neve / neve leve
-                else if (description.Contains("neve") || description.Contains("neve leve"))
+                // chuva
+                else if (description.Contains("light rain") ||
+                         description.Contains("moderate rain") ||
+                         description.Contains("heavy intensity rain") ||
+                         description.Contains("very heavy rain") ||
+                         description.Contains("extreme rain") ||
+                         description.Contains("freezing rain") ||
+                         description.Contains("light intensity shower rain") ||
+                         description.Contains("shower rain") ||
+                         description.Contains("heavy intensity shower rain") ||
+                         description.Contains("ragged shower rain"))
+                {
+                    resourcePath = isDay ? "rainDay.jpg" : "rainNight.jpg";
+                }
+
+                // neve
+                else if (description.Contains("light snow") ||
+                         description.Contains("snow") ||
+                         description.Contains("heavy snow") ||
+                         description.Contains("sleet") ||
+                         description.Contains("light shower sleet") ||
+                         description.Contains("shower sleet") ||
+                         description.Contains("light rain and snow") ||
+                         description.Contains("rain and snow") ||
+                         description.Contains("light shower snow") ||
+                         description.Contains("shower snow") ||
+                         description.Contains("heavy shower snow"))
                 {
                     resourcePath = isDay ? "snowDay.jpg" : "snowNight.jpg";
                 }
 
-                // imagem padrão da aplicação caso nenhuma das alternativas seja aceita
+                // atmosfera (neblina, poeira, fumaça etc.)
+                else if (description.Contains("mist") ||
+                         description.Contains("smoke") ||
+                         description.Contains("haze") ||
+                         description.Contains("fog") ||
+                         description.Contains("squalls") ||
+                         description.Contains("tornado"))
+                {
+                    resourcePath = isDay ? "fogDay.jpg" : "fogNight.jpg";
+                }
+
+                // tempestade de areia / poeira
+                else if (description.Contains("sand") ||
+                         description.Contains("dust") ||
+                         description.Contains("sand/dust whirls"))
+                {
+                    resourcePath = isDay ? "sandDay.jpg" : "sandNight.jpg";
+                }
+
+                // cinza vulcânica
+                else if (description.Contains("volcanic ash")) 
+                {
+                    resourcePath = isDay ? "volcanicAshDay.jpg" : "volcanicAshNight.jpg";
+                }
+
+                // tornado
+                else if (description.Contains("tornado"))
+                {
+                    resourcePath = isDay ? "tornadoDay.jpg" : "tornadoNight.jpg";
+                }
+
+                // imagem padrão
                 else
                 {
                     resourcePath = "default.jpg";
