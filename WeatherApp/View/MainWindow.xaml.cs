@@ -46,19 +46,30 @@ namespace WeatherApp
 
             // chave da API 
             private readonly string apiKey = "af8bee2cf657f1295ededfda82c02255";
-        
+
+            // Initialize resourcePath with a default value to avoid CS0165
+            string resourcePath = "default.jpg";
+
         // CONSTRUTORES
 
-            // construtor que inicializa a janela
-            public MainWindow()
+        // construtor que inicializa a janela
+        public MainWindow()
             {
                 InitializeComponent();
+
+                // chamando a imagem padrão caso não haja retorno válido
+                WeatherImage.Source = new BitmapImage(new Uri($"pack://application:,,,/Resources/{resourcePath}", UriKind.Absolute));
+                        
+                // ajustando as dimensões da imagem e como ela se ajusta à tela
+                WeatherImage.Width = 250;
+                WeatherImage.Height = 250;
+                WeatherImage.Stretch = System.Windows.Media.Stretch.UniformToFill;
             }
 
         // MANIPULADORES DE EVENTOS
 
             // manipulador de clique do botão que busca o tempo para a cidade informada
-            private async void Button_Click(object sender, RoutedEventArgs e)
+            public async void Button_Click(object sender, RoutedEventArgs e)
             {
                 // CAMPOS E CONSTANTES
 
@@ -127,8 +138,7 @@ namespace WeatherApp
                             // boolean para verificar se é dia ou não
                             bool isDay = timezoneDayOrNight is >= 6 and <= 18;
 
-                            // caminho relativo para a imagem exibida
-                            string resourcePath;
+                            
                                 
                     // CONDICIONAIS
 
@@ -186,7 +196,7 @@ namespace WeatherApp
                 }
 
                 // chuva leve / chuva
-                else if (description.Contains("chuva leve") || description.Contains("chuva"))
+                else if (description.Contains("chuva leve") || description.Contains("chuva") || description.Contains("garoa de leve intensidade"))
                 {
                     resourcePath = isDay ? "rainDay.jpg" : "rainNight.jpg";
                 }
@@ -216,13 +226,13 @@ namespace WeatherApp
                     resourcePath = "default.jpg";
                 }
 
-                        // chamando a imagem padrão caso não haja retorno válido
-                        WeatherImage.Source = new BitmapImage(new Uri($"pack://application:,,,/Resources/{resourcePath}", UriKind.Absolute));
+                // chamando a imagem padrão caso não haja retorno válido
+                WeatherImage.Source = new BitmapImage(new Uri($"pack://application:,,,/Resources/{resourcePath}", UriKind.Absolute));
                         
-                        // ajustando as dimensões da imagem e como ela se ajusta à tela
-                        WeatherImage.Width = 250;
-                        WeatherImage.Height = 250;
-                        WeatherImage.Stretch = System.Windows.Media.Stretch.UniformToFill;
+                // ajustando as dimensões da imagem e como ela se ajusta à tela
+                WeatherImage.Width = 250;
+                WeatherImage.Height = 250;
+                WeatherImage.Stretch = System.Windows.Media.Stretch.UniformToFill;
 
                 }
 
@@ -258,6 +268,12 @@ namespace WeatherApp
             private void CloseButton_Click(object sender, RoutedEventArgs e)
             {
                 Window.GetWindow(this)?.Close();
+            }
+
+            // manipulador de evento para mouse pressionado na página (movimento de arrastar o app)
+            private void Window_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+            {
+                DragMove();
             }
     }
 }

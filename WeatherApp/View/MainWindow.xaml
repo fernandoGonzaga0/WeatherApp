@@ -10,13 +10,14 @@
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
         Background="Transparent"
+        MouseLeftButtonDown="Window_MouseLeftButtonDown"
         AllowsTransparency="True">
 
     <Window.Resources>
-        
+
         <!--Adicionando controlTemplate nos recursos para aplicar efeito "hover" nos botões da página, criar padrões de Label
         e TextBlock no código, aparência e triggers na barra de pesquisa e botão OK-->
-        
+
         <!--Minimize button template-->
         <ControlTemplate x:Key="MinimizeButtonTemplate" TargetType="Button">
             <Border x:Name="WindowMinimizeBorder">
@@ -35,7 +36,7 @@
                 </Trigger>
             </ControlTemplate.Triggers>
         </ControlTemplate>
-        
+
         <!--Close button template-->
         <ControlTemplate x:Key="CloseButtonTemplate" TargetType="Button">
             <Border x:Name="WindowCloseBorder">
@@ -53,25 +54,66 @@
                 </Trigger>
             </ControlTemplate.Triggers>
         </ControlTemplate>
-        
+
+        <!--Button Search-->
+        <ControlTemplate x:Key="SearchButton" TargetType="Button">
+            <Border x:Name="SearchButtonBorder"
+                    Background="#30364F"
+                    CornerRadius="10"
+                    Width="100">
+                <TextBlock Text="Search"
+                           FontFamily="Gabriola"
+                           FontWeight="Bold"
+                           Foreground="#ACBAC4"
+                           FontSize="25"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"/>
+
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter TargetName="SearchButtonBorder" Property="Background" Value="#ffffff"/>
+                    <Setter TargetName="SearchButtonBorder" Property="BorderBrush" Value="#30364F"/>
+                    <Setter TargetName="SearchButtonBorder" Property="BorderThickness" Value="1"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+
         <!--Label for Temperature, FeelsLike, Humidity and Wind-->
         <Style x:Key="WheaterInfoLabel" TargetType="Label">
             <Setter Property="FontSize" Value="17"/>
-            <Setter Property="FontFamily" Value="Courier New"/>
+            <Setter Property="FontFamily" Value="Ebrima"/>
             <Setter Property="Foreground" Value="#F0F0DB"/>
         </Style>
         
         <!--TextBlock for temperature, feelslike, humidity and wind-->
         <Style x:Key="WheaterInfoTextBlock" TargetType="TextBlock">
             <Setter Property="FontSize" Value="12"/>
-            <Setter Property="FontFamily" Value="Courier New"/>
+            <Setter Property="FontFamily" Value="Ebrima"/>
             <Setter Property="Foreground" Value="#E1D9BC"/>
         </Style>
 
     </Window.Resources>
 
-    <Border Background="#10131A"
-            CornerRadius="20">
+    <!--Page structure-->
+    <Border CornerRadius="20">
+
+        <Border.Background>
+            <RadialGradientBrush Center="0.5,0.0"
+                             RadiusX="1"
+                             RadiusY="0.8">
+                <GradientStop Color="#46506F" Offset="0"/>
+                <GradientStop Color="#30364F" Offset="0.6"/>
+                <GradientStop Color="#262B40" Offset="1"/>
+            </RadialGradientBrush>
+        </Border.Background>
+
+        <Border.Effect>
+            <DropShadowEffect Color="#000000"
+                          BlurRadius="30"
+                          ShadowDepth="6"
+                          Opacity="0.35"/>
+        </Border.Effect>
 
         <Grid Background="Transparent">
 
@@ -83,7 +125,7 @@
 
             <!--0° row) Close and minimize buttons-->
             <Grid Grid.Row="0"
-                  Width="490">
+                    Width="490">
 
                 <StackPanel VerticalAlignment="Bottom">
                     <!--Title-->
@@ -96,34 +138,33 @@
                                 Margin="10,10,0,0"/>
                 </StackPanel>
 
-                    <StackPanel Orientation="Horizontal"
+                <StackPanel Orientation="Horizontal"
                             HorizontalAlignment="Right">
-                        <!--Minimize button-->
-                        <Button Click="MinimizeButton_Click"
+                    <!--Minimize button-->
+                    <Button Click="MinimizeButton_Click"
                             Background="Transparent"
                             BorderThickness="0"
                             Template="{StaticResource MinimizeButtonTemplate}">
-                        </Button>
+                    </Button>
 
-                        <!--Close button-->
-                        <Button
+                    <!--Close button-->
+                    <Button
                             Click="CloseButton_Click"
                             Background="Transparent"
                             BorderThickness="0"
                             Template="{StaticResource CloseButtonTemplate}"/>
-                    </StackPanel>
+                </StackPanel>
 
-                </Grid>
-
+            </Grid>
 
             <!-- 1° row) Display -->
             <Grid Grid.Row="1"
-                  Margin="0,10,0,0">
+                    Margin="0,10,0,0">
 
                 <StackPanel Orientation="Vertical">
 
                     <StackPanel Orientation="Horizontal">
-                    
+
                         <!--Image-->
                         <Border Height="250" 
                                 Width="250" 
@@ -135,13 +176,9 @@
                                 <Image.Clip>
                                     <RectangleGeometry RadiusX="20"
                                                         RadiusY="20"
-                                                        Rect="0,0,250,250"/>
+                                                        Rect="0,0,252,252"/>
                                 </Image.Clip>
                             </Image>
-                            <Border.Background>
-                                <ImageBrush ImageSource="/Resources/default.jpg" 
-                                            Stretch="UniformToFill"/>
-                            </Border.Background>
                         </Border>
 
                         <!--City, timezone and description-->
@@ -152,7 +189,7 @@
                                 <RowDefinition/>
                                 <RowDefinition/>
                             </Grid.RowDefinitions>
-                            
+
                             <!--City name-->
                             <TextBlock  Grid.Row="0" 
                                         x:Name="CityResult"
@@ -160,7 +197,7 @@
                                         FontFamily="Gabriola"
                                         Foreground="#F0F0DB"
                                         VerticalAlignment="Center"/>
-                            
+
                             <!--Timezone-->
                             <TextBlock  Grid.Row="1" 
                                         x:Name="TimezoneResult"
@@ -169,7 +206,7 @@
                                         Foreground="#E1D9BC"
                                         VerticalAlignment="Center"
                                         HorizontalAlignment="Center"/>
-    
+
                             <!--Description-->
                             <TextBlock  Grid.Row="2" 
                                         x:Name="DescriptionResult"
@@ -177,10 +214,10 @@
                                         FontFamily="Gabriola"
                                         Foreground="#E1D9BC"
                                         VerticalAlignment="Center"
-                                        HorizontalAlignment="Center"/> 
-                            
+                                        HorizontalAlignment="Center"/>
+
                         </Grid>
-     
+
                     </StackPanel>
 
                     <!--Temperature, FeelsLike, Humidity and Wind-->
@@ -202,10 +239,10 @@
                                     VerticalAlignment="Center"
                                     HorizontalAlignment="Left">
                             <Label Content="Temperature"
-                                   x:Name="labelTemp"
-                                   Style="{StaticResource WheaterInfoLabel}"/>
+                                    x:Name="labelTemp"
+                                    Style="{StaticResource WheaterInfoLabel}"/>
                             <TextBlock x:Name="TempResult"
-                                   Style="{StaticResource WheaterInfoTextBlock}"/>
+                                    Style="{StaticResource WheaterInfoTextBlock}"/>
 
                         </StackPanel>
 
@@ -215,10 +252,10 @@
                                     VerticalAlignment="Center"
                                     HorizontalAlignment="Left">
                             <Label Content="Feels Like"
-                                   x:Name="labelFeelsLike"
-                                   Style="{StaticResource WheaterInfoLabel}"/>
+                                    x:Name="labelFeelsLike"
+                                    Style="{StaticResource WheaterInfoLabel}"/>
                             <TextBlock x:Name="FeelsLikeResult" 
-                                       Style="{StaticResource WheaterInfoTextBlock}"/>
+                                        Style="{StaticResource WheaterInfoTextBlock}"/>
                         </StackPanel>
 
                         <!--Humidity-->
@@ -227,10 +264,10 @@
                                     VerticalAlignment="Center"
                                     HorizontalAlignment="Left">
                             <Label Content="Humidity"
-                                   x:Name="labelHumidity"
-                                   Style="{StaticResource WheaterInfoLabel}"/>
+                                    x:Name="labelHumidity"
+                                    Style="{StaticResource WheaterInfoLabel}"/>
                             <TextBlock x:Name="HumidityResult" 
-                                       Style="{StaticResource WheaterInfoTextBlock}"/>
+                                        Style="{StaticResource WheaterInfoTextBlock}"/>
                         </StackPanel>
 
                         <!--Wind-->
@@ -239,77 +276,69 @@
                                     VerticalAlignment="Center"
                                     HorizontalAlignment="Left">
                             <Label Content="Wind"
-                                   x:Name="labelWind"
-                                   Style="{StaticResource WheaterInfoLabel}"/>
+                                    x:Name="labelWind"
+                                    Style="{StaticResource WheaterInfoLabel}"/>
                             <TextBlock x:Name="WindResult"
-                                       Style="{StaticResource WheaterInfoTextBlock}"/>
+                                        Style="{StaticResource WheaterInfoTextBlock}"/>
                         </StackPanel>
 
                     </Grid>
 
                 </StackPanel>
-            
+
             </Grid>
 
-        <!-- 2° row) Search-->
-        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
-            
-            <!--Search input-->
+            <!-- 2° row) Search-->
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
 
-                <Border Height="40"
-                        Width="300"
+                <!--Search input-->
+
+                <Border Height="50"
+                        Width="310"
                         CornerRadius="15"
                         Background="#ACBAC4">
 
-                    <StackPanel Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal"
+                                Width="310">
                         <Grid>
                             <TextBox x:Name="SearchBox" 
-                             Height="30"
-                             Width="210"
-                             VerticalAlignment="Center"
-                             TextChanged="SearchBox_TextChanged"
-                             Background="Transparent"
-                             BorderThickness="0"
-                             FontSize="14"/>
+                                        Height="30"
+                                        Width="210"
+                                        FontFamily="Ebrima"                                    
+                                        FontSize="20"  
+                                        Padding="4,0,0,0"
+                                        VerticalAlignment="Center"
+                                        Foreground="#30364F"
+                                        TextChanged="SearchBox_TextChanged"
+                                        Background="Transparent"
+                                        BorderThickness="0"
+                                />
 
                             <TextBlock x:Name="SearchTextBlock"
-                                       Text="Search..."
-                                       FontFamily="Gabriola"
-                                       FontSize="20"
-                                       Height="30"
-                                       Width="210"
-                                       Padding="4,0,0,0"
-                                       Foreground="#30364F"
-                                       VerticalAlignment="Center"
-                                       IsHitTestVisible="False"
-                                       Visibility="Visible"/>
+                                        Text="New York,EUA..."
+                                        Height="30"
+                                        Width="210"                                       
+                                        FontFamily="Ebrima"
+                                        FontSize="18"
+                                        Padding="4,0,0,0"
+                                        VerticalAlignment="Center"                                       
+                                        Foreground="#30364F"
+                                        IsHitTestVisible="False"
+                                        Visibility="Visible"/>
                         </Grid>
 
-                        <Border Background="#30364F"
-                                CornerRadius="15"
-                                Height="auto"
-                                Width="90">
-                            <Button x:Name="btnSearch" 
-                                            Height="20"
-                                            Background="Transparent"
-                                            BorderThickness="0"
-                                            Width="40"
-                                            Content="OK"
-                                            Click="Button_Click"/>                              
-                        </Border>
-                        
-                        
-                        
+                        <Button x:Name="btnSearch" 
+                                Template="{StaticResource SearchButton}"
+                                Click="Button_Click"/>
+
                     </StackPanel>
 
                 </Border>
 
-
-         
-
             </StackPanel>
 
-            </Grid> 
+        </Grid>
+
     </Border>
-    
+
 </Window>
