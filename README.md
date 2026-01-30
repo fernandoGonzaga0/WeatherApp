@@ -7,7 +7,7 @@
 
 Aplicação WPF simples que consulta a API OpenWeatherMap e exibe informações básicas do tempo (cidade, horário local, descrição, temperatura, sensação térmica, umidade e velocidade do vento). Projeto de exemplo voltado para aprendizado de integração HTTP, desserialização JSON e construção de UI com XAML.
 
-![Demonstração da aplicação](WeatherApp/Resources/GitHubResources/appRunning.GIF)
+![Demonstração da aplicação](WeatherApp/Resources/GitHubResources/20260130_161005_Export.GIF)
 
 ---
 
