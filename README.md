@@ -183,34 +183,13 @@ Passos:
 
 ---
 
-## Melhorias sugeridas
-
-- Adotar MVVM (separar UI de lógica) e usar `INotifyPropertyChanged` para binding direto ao ViewModel em vez de manipular controles no code-behind.
-- Remover a API key do código-fonte; usar `user secrets`, `appsettings.json`, ou variáveis de ambiente.
-- Usar `IHttpClientFactory` (quando aplicável) para gerenciamento de `HttpClient`.
-- Tratar erros de rede com feedback ao usuário e retry/backoff se necessário.
-- Internacionalização completa (usando `Resources`), caso deseje suportar múltiplos idiomas.
-- Validar e proteger contra `NullReferenceException` com checagens e uso de `?.` e `??`.
-- Melhorar cálculo dia/noite usando `weather.Timezone` e `DateTimeOffset` em vez de string-parsing.
-
----
-
-## Contribuição
-
-1. Fork e clone o projeto.
-2. Crie branch com feature/bugfix.
-3. Abra PR com descrição clara das mudanças.
-4. Mantenha commits pequenos e mensagens descritivas.
-
----
-
 ## Licença
 
-Adicionar arquivo `LICENSE` conforme preferência (ex.: MIT) ou especificar a licença no repo.
+<p>Distribuído sob licença MIT.</p>   
 
----
+## Autor
 
-Se quiser, eu posso:
-- Gerar um patch que reordene as validações e corrija o bug que limpa os campos ao lançar exceção.
-- Remover a chave hard-coded e implementar leitura de variável de ambiente.
-- Extrair a lógica para um `ViewModel` (adotar MVVM).
+<p>Desenvolvido por Fernando Gonzaga:</p>
+
+  - Linkedln: https://www.linkedin.com/in/fernando-gonzaga21/
+  - GitHub: https://github.com/fernandoGonzaga0
