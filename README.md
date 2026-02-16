@@ -5,7 +5,7 @@
 [![WPF](https://img.shields.io/badge/WPF-Windows_Desktop-0078D4?style=flat&logo=windows)](https://learn.microsoft.com/dotnet/desktop/wpf/)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
-Aplicação WPF simples que consulta a API OpenWeatherMap e exibe informações básicas do tempo (cidade, horário local, descrição, temperatura, sensação térmica, umidade e velocidade do vento). Projeto de exemplo voltado para aprendizado de integração HTTP, desserialização JSON e construção de UI com XAML.
+Aplicação WPF que consulta a API OpenWeatherMap e exibe informações básicas do tempo (cidade, horário local, descrição, temperatura, sensação térmica, umidade e velocidade do vento). Projeto de exemplo voltado para aprendizado de integração HTTP, desserialização JSON e construção de UI com XAML.
 
 ![Demonstração da aplicação](WeatherApp/Resources/GitHubResources/runningApp.gif)
 
